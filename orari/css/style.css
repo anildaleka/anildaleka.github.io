@@ -191,13 +191,33 @@ table.data-table tr:hover td{background:var(--bg);}
 
 /* Timetable grid */
 .tt-grid{border-collapse:collapse; width:100%; font-size:.82rem;}
-.tt-grid th, .tt-grid td{border:1px solid var(--line); padding:6px 8px; text-align:center; vertical-align:top;}
+.tt-grid th, .tt-grid td{border:1px solid var(--line); padding:6px 8px; text-align:center; vertical-align:top; position:relative;}
 .tt-grid th{background:var(--bg); font-size:.72rem; text-transform:uppercase; color:var(--ink-soft);}
 .tt-grid td.period-lbl{background:var(--bg); font-weight:600; color:var(--ink-soft); white-space:nowrap;}
-.tt-cell{min-width:96px; min-height:40px;}
-.tt-cell .subj{font-weight:600; font-size:.82rem;}
-.tt-cell .teach{font-size:.72rem; color:var(--ink-soft); display:block; margin-top:1px;}
-.tt-cell.empty{color:var(--line);}
+.tt-cell{min-width:96px; min-height:40px; border-left:4px solid var(--tcolor,transparent) !important;}
+.tt-cell .subj{font-weight:600; font-size:.82rem; display:block;}
+.tt-cell .teach{font-size:.72rem; color:var(--ink-soft); display:flex; align-items:center; justify-content:center; gap:4px; margin-top:1px;}
+.tt-cell.empty{color:var(--line); border-left:4px solid transparent !important;}
+.tt-cell .pin{position:absolute; top:2px; right:4px; font-size:.68rem;}
+.tt-cell-editable{cursor:pointer;}
+.tt-cell-editable:hover{background:var(--accent-soft); outline:2px solid var(--accent); outline-offset:-2px;}
+.tt-cell-locked{border:2px dashed var(--warn) !important; background:var(--warn-soft);}
+
+.dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle; flex-shrink:0;}
+.legend-wrap{display:flex; flex-wrap:wrap; gap:10px 16px;}
+.legend-item{display:inline-flex; align-items:center; font-size:.82rem; color:var(--ink-soft);}
+
+/* Master (whole-school) chart */
+.master-grid{font-size:.74rem;}
+.master-grid th{padding:5px 4px;}
+.mc-corner{min-width:150px;}
+.mc-teacher{
+  text-align:left !important; white-space:nowrap; font-weight:600; font-size:.82rem;
+  border-left:4px solid var(--tcolor,transparent) !important; padding-left:8px !important;
+  background:var(--surface); position:sticky; left:0;
+}
+.mc-cell{font-weight:700; border-left:3px solid var(--tcolor,transparent) !important; min-width:34px; padding:5px 3px !important;}
+.mc-cell.empty{font-weight:400; color:var(--line); border-left:3px solid transparent !important;}
 
 .badge-warn{background:var(--warn-soft); color:var(--warn); padding:2px 9px; border-radius:20px; font-size:.75rem; font-weight:600;}
 .badge-ok{background:var(--accent-soft); color:var(--accent-dark); padding:2px 9px; border-radius:20px; font-size:.75rem; font-weight:600;}
@@ -236,4 +256,16 @@ table.data-table tr:hover td{background:var(--bg);}
   .brand-text small{display:none;}
   .save-status{display:none;}
   .field-row{flex-direction:column;}
+}
+
+/* ---------- Print (Grafiku i Plotë) ---------- */
+@media print{
+  .topbar, .sidebar, .sidebar-backdrop, .page-head button,
+  .toolbar, .modal-backdrop, .toast{ display:none !important; }
+  body, .app, .shell, .content{ background:#fff !important; padding:0 !important; margin:0 !important; }
+  .card{ box-shadow:none !important; border:none !important; }
+  .master-grid{ font-size:9px; }
+  .master-grid th, .master-grid td{ padding:3px 2px; }
+  .mc-teacher{ position:static; }
+  @page{ size:landscape; margin:10mm; }
 }
